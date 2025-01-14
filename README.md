@@ -8,7 +8,6 @@ vfb->width = WIDTH;
 vfb->height = HEIGHT;
 asciiinit(&vfb); 
 ```
-<br />
 
 #### After you drew in virtual framebuffer you must render it
 ``` c
