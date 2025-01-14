@@ -12,7 +12,7 @@ char sword[3 * 7] = {
     ' ', 'O', ' ',
     ' ', 'O', ' '
 };
-char* name = "Sigma";
+char* name = "test";
 
 int main()
 {
