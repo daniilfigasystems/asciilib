@@ -35,7 +35,7 @@ double asciicos(double n);
 double asciisin(double n);
 
 char asciigrayscale2ascii(unsigned char grayscale);
-void asciigrayscalearray2asciiarray(char* dst, char* src, int width, int height);
+void asciigrayscalearray2asciiarray(char* dst, unsigned char* src, int width, int height);
 
 
 /**
@@ -264,7 +264,7 @@ double asciisin(double n)
 * @param grayscale Grayscale value
 * @return Converted grayscale to ascii
 */
-char asciigrayscale2ascii(char grayscale)
+char asciigrayscale2ascii(unsigned char grayscale)
 {
     if (grayscale < 25) return '@';
     if (grayscale < 50) return '%';
@@ -286,7 +286,7 @@ char asciigrayscale2ascii(char grayscale)
 * @param height Height of source
 * @return Nothing
 */
-void asciigrayscalearray2asciiarray(char* dst, char* src, int width, int height)
+void asciigrayscalearray2asciiarray(char* dst, unsigned char* src, int width, int height)
 {
     for (int y = 0; y < height; y++)
     {
