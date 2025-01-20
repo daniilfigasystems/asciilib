@@ -22,6 +22,8 @@ void asciiinit(asciifb* vfb);
 void asciiclearfb(asciifb* vfb);
 void asciicopyatfb(asciifb* vfb, char* src, int offsetx, int offsety, int width, int height);
 void asciicopyfb(asciifb* dst, asciifb* src);
+void asciimovefb(asciifb* dst, asciifb* src);
+void asciimoveatfb(asciifb* vfb, int offsetx, int offsety, int offsetx1, int offsety1, int width, int height);
 void asciidrawcircle(asciifb* vfb, int x, int y, int x1, int y1, char c);
 void asciidrawline(asciifb* vfb, int x, int y, int x1, int y1, char c);
 void asciiputpixel(asciifb* vfb, int x, int y, char c);
@@ -97,6 +99,45 @@ void asciicopyfb(asciifb* dst, asciifb* src)
 
     memcpy(dst->fb, src->fb, src->size);
 }
+
+/**
+* @note Source can't be larger than destination
+* @brief Move primary virtual framebuffer to secondary virtual framebuffer
+* @param dst Pointer to primary virtual framebuffer
+* @param src Pointer to secondary virtual framebuffer
+* @return Nothing
+*/
+void asciimovefb(asciifb* dst, asciifb* src)
+{
+    if (src->size > dst->size)
+        return;
+
+    memmove(dst->fb, src->fb, src->size);
+}
+
+/**
+* @brief Move content of virtual framebuffer to offset
+* @param vfb Pointer to virtual framebuffer
+* @param offsetx X offset from which position to move
+* @param offsety Y offset from which position to move
+* @param offsetx1 X offset
+* @param offsety1 Y offset
+* @param width Width of move data
+* @param height Height of move data
+* @return Nothing
+*/
+void asciimoveatfb(asciifb* vfb, int offsetx, int offsety, int offsetx1, int offsety1, int width, int height)
+{
+    if ((offsety * vfb->width) + offsetx > vfb->size || (offsety1 * vfb->width) + offsetx1 > vfb->size)
+        return;
+
+    for (int y = 0; y < height; y++)
+    {
+        for (int x = 0; x < width; x++)
+            vfb->fb[((offsety1 * vfb->width) + offsetx1) + ((y * vfb->width) + x)] = vfb->fb[((offsety * vfb->width) + offsetx) + (y * width) + x];
+    }
+}
+
 
 /**
 * @brief Put pixel
